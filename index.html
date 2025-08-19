@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Darshan S — Cybersecurity Portfolio</title>
+  <meta name="description" content="Portfolio of Darshan S — Cybersecurity student and practitioner: Wireshark, Kali, AWS, Android & DBMS projects." />
+
+  <!-- ===== Styles (No external CSS) ===== -->
+  <style>
+    :root{
+      --bg:#06080f;
+      --panel:#0c1222cc;
+      --panel-strong:#0f1629f2;
+      --text:#e6f1ff;
+      --muted:#9fb3c8;
+      --accent:#40e0d0;      /* turquoise */
+      --accent-2:#7c4dff;    /* violet */
+      --accent-3:#00e5ff;    /* cyan */
+      --success:#61ffa8;
+      --warning:#ffd166;
+      --danger:#ff6b6b;
+      --glow:0 0 24px rgba(64,224,208,.35), 0 0 2px rgba(64,224,208,.8) inset;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --grid-color:rgba(124,77,255,.07);
+    }
+    /* Light theme */
+    .light{
+      --bg:#f7f9fe;
+      --panel:#ffffffd9;
+      --panel-strong:#ffffff;
+      --text:#111827;
+      --muted:#4b5563;
+      --accent:#0ea5e9;
+      --accent-2:#7c3aed;
+      --accent-3:#06b6d4;
+      --glow:0 0 16px rgba(14,165,233,.25);
+      --grid-color:rgba(14,165,233,.08);
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background:var(--bg); line-height:1.6;
+      /* animated cyber grid */
+      background-image:
+        radial-gradient(60vmax 60vmax at 120% -10%, rgba(124,77,255,.12) 0%, transparent 60%),
+        radial-gradient(40vmax 40vmax at -20% 110%, rgba(0,229,255,.09) 0%, transparent 60%),
+        linear-gradient(transparent, transparent),
+        repeating-linear-gradient(0deg, transparent 0 28px, var(--grid-color) 28px 29px),
+        repeating-linear-gradient(90deg, transparent 0 28px, var(--grid-color) 28px 29px);
+      background-attachment: fixed;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+
+    /* Navbar */
+    nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background:linear-gradient(180deg, var(--panel), transparent);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 20px}
+    .brand{display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.4px}
+    .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 14px var(--accent)}
+    .nav-links{display:flex; gap:16px; flex-wrap:wrap}
+    .chip{
+      padding:8px 12px; border-radius:999px; background:var(--panel); border:1px solid rgba(255,255,255,.08);
+    }
+    .btn{
+      border:none; border-radius:12px; padding:10px 14px; cursor:pointer; font-weight:600;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:white; box-shadow: var(--glow);
+    }
+    .btn.ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.12)}
+    .btn:active{transform:translateY(1px)}
+
+    /* Sections */
+    section{padding:72px 0}
+    .card{
+      background:var(--panel); border:1px solid rgba(255,255,255,.09);
+      box-shadow: var(--shadow); border-radius:var(--radius);
+    }
+    .card-header{display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.08)}
+    .card-body{padding:20px}
+
+    /* Hero */
+    .hero{
+      display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:stretch;
+    }
+    .hero .terminal{
+      padding:0; overflow:hidden; position:relative;
+    }
+    .termbar{display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.08); background:var(--panel-strong)}
+    .termbar .lights span{display:inline-block; width:10px; height:10px; border-radius:50%}
+    .termbar .lights span:nth-child(1){background:#ff5f56}
+    .termbar .lights span:nth-child(2){background:#ffbd2e}
+    .termbar .lights span:nth-child(3){background:#27c93f}
+    .term-screen{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      padding:20px; min-height:320px; background:radial-gradient(60% 80% at 50% 20%, rgba(124,77,255,.08), transparent 55%);
+    }
+    .caret{display:inline-block; width:10px; background:var(--accent); animation:blink 1s steps(1,end) infinite}
+    @keyframes blink{50%{opacity:.2}}
+    .hero aside{
+      display:grid; gap:16px;
+    }
+    .metric{
+      display:flex; align-items:center; gap:12px; padding:16px; border-radius:14px; background:var(--panel);
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .metric b{font-size:1.1rem}
+
+    /* Grid helpers */
+    .grid{display:grid; gap:20px}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width: 980px){ .hero{grid-template-columns:1fr} .cols-3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .cols-2, .cols-3{grid-template-columns:1fr} }
+
+    /* Skills */
+    .badge{padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:linear-gradient(180deg, transparent, rgba(255,255,255,.02))}
+    .skillbar{height:10px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden}
+    .skillbar > i{display:block; height:100%; background:linear-gradient(90deg, var(--accent), var(--accent-2))}
+    .skills-grid{display:grid; gap:14px; grid-template-columns:1.1fr .9fr}
+
+    /* Projects */
+    .filters{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px}
+    .project{display:flex; flex-direction:column; gap:12px; padding:16px; border-radius:16px; background:var(--panel); border:1px solid rgba(255,255,255,.08)}
+    .project h4{margin:0}
+    .tags{display:flex; gap:8px; flex-wrap:wrap}
+    .project .cta{display:flex; gap:10px; margin-top:auto}
+    .hidden{display:none !important}
+
+    /* Timeline */
+    .timeline{position:relative; padding-left:18px}
+    .timeline::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:linear-gradient(var(--accent-2), var(--accent))}
+    .t-item{position:relative; margin:18px 0; padding-left:16px}
+    .t-item::before{content:""; position:absolute; left:-3px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent)}
+
+    /* Carousel (certs) */
+    .carousel{display:flex; overflow:auto; gap:12px; scroll-snap-type:x mandatory; padding-bottom:6px}
+    .c-card{min-width:280px; scroll-snap-align:start}
+
+    /* Modal */
+    dialog{
+      border:none; border-radius:16px; background:var(--panel-strong); color:var(--text);
+      width:min(760px, 92%); box-shadow:var(--shadow);
+    }
+    dialog::backdrop{background:rgba(0,0,0,.6)}
+    .modal-head{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
+    .modal-body{padding:16px}
+
+    /* Footer */
+    footer{padding:40px 0; text-align:center; color:var(--muted)}
+
+    /* Subtle enter animations */
+    [data-reveal]{opacity:0; transform:translateY(12px); transition:.6s ease}
+    [data-reveal].in{opacity:1; transform:none}
+  </style>
+</head>
+<body>
+  <!-- ===== Nav ===== -->
+  <nav>
+    <div class="nav-inner container">
+      <div class="brand"><span class="dot"></span> <span>Darshan S</span></div>
+      <div class="nav-links">
+        <a class="chip" href="#about">About</a>
+        <a class="chip" href="#skills">Skills</a>
+        <a class="chip" href="#projects">Projects</a>
+        <a class="chip" href="#experience">Experience</a>
+        <a class="chip" href="#education">Education</a>
+        <a class="chip" href="#certs">Certifications</a>
+        <a class="chip" href="#pubs">Publication</a>
+        <button id="themeToggle" class="btn ghost" title="Toggle theme">🌗 Theme</button>
+        <!-- TODO: replace href with your hosted resume file -->
+        <a class="btn" href="#" onclick="alert('Attach your hosted PDF and update the link!')" title="Download resume">⬇ Resume</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="about">
+      <div class="card terminal" data-reveal>
+        <div class="termbar">
+          <div class="lights"><span></span><span></span><span></span></div>
+          <strong style="opacity:.85">/usr/bin/portfolio — soc@darshan</strong>
+        </div>
+        <div class="term-screen" id="terminal">
+          <div>> hello, i’m <span style="color:var(--accent)">Darshan S</span> — cybersecurity & cloud enthusiast.</div>
+          <div>> specialties: wireshark, kali, aws, python, sql.</div>
+          <div>> status: seeking opportunities & internships.</div>
+          <div>> contact: <a href="mailto:darshan46610@gmail.com">darshan46610@gmail.com</a> • <a href="https://www.linkedin.com/in/darshan-vijay-b625b2266" target="_blank" rel="noopener">LinkedIn</a></div>
+          <div id="typewriter"></div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="metric" data-reveal>
+          <div>🧪</div>
+          <div>
+            <b>Cybersecurity Intern — Technook</b><br>
+            <small>May–Jul 2023 • Network analysis (Wireshark/Burp), 10+ pentest sims, mitigation insights.</small>
+          </div>
+        </div>
+        <div class="metric" data-reveal>
+          <div>📈</div>
+          <div>
+            <b>50+ Traffic Patterns Analyzed</b><br>
+            <small>Hands-on packet forensics and security recommendations.</small>
+          </div>
+        </div>
+        <div class="metric" data-reveal>
+          <div>🧠</div>
+          <div>
+            <b>AWS Certified Practitioner</b><br>
+            <small>Cloud fundamentals + IoT analytics exposure.</small>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section id="skills">
+      <div class="grid skills-grid">
+        <div class="card" data-reveal>
+          <div class="card-header"><strong>Technical Skills</strong><span class="badge">Live Radar</span></div>
+          <div class="card-body">
+            <canvas id="radar" width="520" height="360" aria-label="Skills radar chart"></canvas>
+            <div class="tags" style="margin-top:12px">
+              <span class="badge">Python (Basics, Cisco)</span>
+              <span class="badge">Java (Basics)</span>
+              <span class="badge">SQL</span>
+              <span class="badge">Wireshark (100+ hrs)</span>
+              <span class="badge">Kali Linux</span>
+              <span class="badge">OWASP ZAP</span>
+              <span class="badge">AWS (Practitioner)</span>
+              <span class="badge">Packet Tracer</span>
+              <span class="badge">Ubuntu</span>
+              <span class="badge">Git</span>
+              <span class="badge">MySQL</span>
+              <span class="badge">MS Excel</span>
+              <span class="badge">Android Studio</span>
+              <span class="badge">VS Code</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-reveal>
+          <div class="card-header"><strong>Strength Signals</strong><span class="badge">auto-estimated</span></div>
+          <div class="card-body grid" style="gap:10px">
+            <div>
+              <b>Network Forensics</b>
+              <div class="skillbar" title="Network Forensics"><i style="width:86%"></i></div>
+            </div>
+            <div>
+              <b>Web App Security</b>
+              <div class="skillbar"><i style="width:74%"></i></div>
+            </div>
+            <div>
+              <b>Cloud Fundamentals</b>
+              <div class="skillbar"><i style="width:70%"></i></div>
+            </div>
+            <div>
+              <b>Python Scripting</b>
+              <div class="skillbar"><i style="width:62%"></i></div>
+            </div>
+            <div>
+              <b>SQL / DB Design</b>
+              <div class="skillbar"><i style="width:68%"></i></div>
+            </div>
+            <div>
+              <b>Android Tooling</b>
+              <div class="skillbar"><i style="width:58%"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects">
+      <div class="card" data-reveal>
+        <div class="card-header">
+          <strong>Projects</strong>
+          <div class="filters">
+            <button class="chip filter active" data-filter="all">All</button>
+            <button class="chip filter" data-filter="web">Web / E-commerce</button>
+            <button class="chip filter" data-filter="dbms">DBMS</button>
+            <button class="chip filter" data-filter="android">Android</button>
+            <button class="chip filter" data-filter="research">Research</button>
+          </div>
+        </div>
+        <div class="card-body grid cols-3" id="projectGrid">
+          <!-- Online Clothing Store -->
+          <article class="project" data-cat="web">
+            <h4>Online Clothing Store</h4>
+            <p>E-commerce app (Ekart-style) with cart & payment integration. Built using Python + Java interop concepts.</p>
+            <div class="tags">
+              <span class="badge">Python</span><span class="badge">Java</span><span class="badge">Payments</span>
+            </div>
+            <div class="cta">
+              <button class="btn ghost" onclick="openDetails('clothing')">Details</button>
+              <a class="btn" href="#" onclick="alert('Add your repo/demo URL')" title="Add your link">View</a>
+            </div>
+          </article>
+
+          <!-- Online Attendance System -->
+          <article class="project" data-cat="dbms">
+            <h4>Online Attendance System</h4>
+            <p>Database-driven platform to manage and track student attendance with role-based access.</p>
+            <div class="tags">
+              <span class="badge">MySQL</span><span class="badge">DBMS</span><span class="badge">Auth</span>
+            </div>
+            <div class="cta">
+              <button class="btn ghost" onclick="openDetails('attendance')">Details</button>
+              <a class="btn" href="#" onclick="alert('Add your repo/demo URL')">View</a>
+            </div>
+          </article>
+
+          <!-- Mock Location App -->
+          <article class="project" data-cat="android">
+            <h4>Mock Location App</h4>
+            <p>Android testing utility that simulates GPS locations for QA and development workflows.</p>
+            <div class="tags">
+              <span class="badge">Android Studio</span><span class="badge">Location</span><span class="badge">Testing</span>
+            </div>
+            <div class="cta">
+              <button class="btn ghost" onclick="openDetails('mockgps')">Details</button>
+              <a class="btn" href="#" onclick="alert('Add your repo/demo URL')">View</a>
+            </div>
+          </article>
+
+          <!-- Publication -->
+          <article class="project" data-cat="research">
+            <h4>Multi-Cloud Security: Challenges & Solutions</h4>
+            <p>Published in IJRP&R, Vol. 6, Issue 1 (Jan 2025). A survey of threat models and controls across providers.</p>
+            <div class="tags">
+              <span class="badge">Cloud Security</span><span class="badge">Survey</span><span class="badge">Research</span>
+            </div>
+            <div class="cta">
+              <button class="btn ghost" onclick="openDetails('paper')">Abstract</button>
+              <a class="btn" href="#" onclick="alert('Add DOI or PDF link')">Read</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section id="experience">
+      <div class="card" data-reveal>
+        <div class="card-header"><strong>Experience</strong><span class="badge">1 role</span></div>
+        <div class="card-body timeline">
+          <div class="t-item">
+            <h4>Cybersecurity Intern — Technook <small style="color:var(--muted)">May–Jul 2023</small></h4>
+            <ul>
+              <li>Conducted network security analysis with Wireshark & Burp Suite; analyzed 50+ traffic patterns.</li>
+              <li>Executed 10+ simulated penetration tests, identified vulns, and recommended mitigations.</li>
+              <li>Documented findings and improved team playbooks.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Education ===== -->
+    <section id="education">
+      <div class="grid cols-2">
+        <div class="card" data-reveal>
+          <div class="card-header"><strong>Education</strong></div>
+          <div class="card-body timeline">
+            <div class="t-item">
+              <h4>Garden City University, Bangalore — B.Tech CSE (Cyber Security)</h4>
+              <div>2022–2026 • CGPA: 7.5</div>
+            </div>
+            <div class="t-item">
+              <h4>Diploma in Computer Science (Cyber Security)</h4>
+              <div>Completed • CGPA: 8.5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="card" id="certs" data-reveal>
+          <div class="card-header"><strong>Certifications</strong><span class="badge">scroll →</span></div>
+          <div class="card-body carousel">
+            <div class="c-card card">
+              <div class="card-body">
+                <b>AWS DGL SS: Intro to AWS IoT Analytics</b><br><small>Cloud + IoT analytics foundations.</small>
+              </div>
+            </div>
+            <div class="c-card card">
+              <div class="card-body">
+                <b>Python Basics (Cisco)</b><br><small>Core syntax, control flow, and data handling.</small>
+              </div>
+            </div>
+            <div class="c-card card">
+              <div class="card-body">
+                <b>Python Concurrent Programming</b><br><small>Asynchronous executions.</small>
+              </div>
+            </div>
+            <div class="c-card card">
+              <div class="card-body">
+                <b>Python HTTP Requests</b><br><small>Using <code>requests</code> module for APIs.</small>
+              </div>
+            </div>
+            <div class="c-card card">
+              <div class="card-body">
+                <b>Network Support & Security</b><br><small>Foundations in networking & defense practices.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Publication ===== -->
+    <section id="pubs">
+      <div class="card" data-reveal>
+        <div class="card-header"><strong>Publication</strong><span class="badge">2025 • Journal</span></div>
+        <div class="card-body">
+          <p><b>Multi-Cloud Security Challenges and Solutions</b> — International Journal of Research Publication and Reviews, Vol. 6, Issue 1, Jan 2025. <!-- TODO: Add link to your paper --> </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact">
+      <div class="grid cols-2">
+        <div class="card" data-reveal>
+          <div class="card-header"><strong>Get in Touch</strong><span class="badge">fast response</span></div>
+          <div class="card-body">
+            <p>Open to internships, SOC analyst roles, and cloud/security projects.</p>
+            <p><b>Email:</b> <a href="mailto:darshan46610@gmail.com">darshan46610@gmail.com</a> • <b>Phone:</b> <a href="tel:+917892438587">+91 78924 38587</a></p>
+            <p><b>LinkedIn:</b> <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/darshan-vijay-b625b2266">darshan-vijay-b625b2266</a></p>
+            <form onsubmit="mailtoSubmit(event)">
+              <div class="grid cols-2" style="gap:12px">
+                <input required class="chip" name="name" placeholder="Your name" />
+                <input required class="chip" name="email" type="email" placeholder="Your email" />
+              </div>
+              <textarea required class="chip" name="message" placeholder="Message" style="width:100%; height:120px; margin:12px 0"></textarea>
+              <button class="btn">Send</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Fun mini tool: Packet visualizer -->
+        <div class="card" data-reveal>
+          <div class="card-header"><strong>Mini Tool: Packet Visualizer</strong><span class="badge">Wireshark-inspired</span></div>
+          <div class="card-body">
+            <canvas id="packets" width="520" height="220" aria-label="Packet visualizer"></canvas>
+            <div style="display:flex; gap:10px; margin-top:10px">
+              <button class="btn ghost" onclick="spawnBurst()">Send Burst</button>
+              <button class="btn ghost" onclick="toggleFlow()">Pause/Resume</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> Darshan S • Built with hand-rolled HTML/CSS/JS • Theme: Cyber Terminal</footer>
+
+  <!-- ===== Modals ===== -->
+  <dialog id="modal">
+    <div class="modal-head">
+      <strong id="mTitle">Project</strong>
+      <button class="btn ghost" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody">Loading…</div>
+  </dialog>
+
+  <!-- ===== Scripts (No external JS) ===== -->
+  <script>
+    /* ========= Theme Toggle ========= */
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved==='light') document.body.classList.add('light');
+    themeToggle.addEventListener('click', ()=>{
+      document.body.classList.toggle('light');
+      localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    /* ========= Typewriter in Terminal ========= */
+    const tw = [
+      ">> tools: wireshark • kali • zap • aws • mysql",
+      ">> building safer systems through curious analysis.",
+      ">> try the packet visualizer below ⤵"
+    ];
+    const twEl = document.getElementById('typewriter');
+    let i=0, j=0; let isDel=false;
+    function tick(){
+      const word = tw[i];
+      twEl.innerHTML = "&gt; " + (isDel ? word.slice(0, j--) : word.slice(0, j++)) + '<span class="caret">&nbsp;</span>';
+      if(!isDel && j===word.length+1){ isDel=true; setTimeout(tick, 1000); return; }
+      if(isDel && j===0){ isDel=false; i=(i+1)%tw.length; }
+      setTimeout(tick, 32 + Math.random()*40);
+    }
+    tick();
+
+    /* ========= Reveal on Scroll ========= */
+    const ro = new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target);} })
+    }, {threshold:.12});
+    document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
+
+    /* ========= Skills Radar (Canvas) ========= */
+    const radar = document.getElementById('radar').getContext('2d');
+    const skills = [
+      {name:'Wireshark', val:86},
+      {name:'Web Sec', val:74},
+      {name:'Cloud (AWS)', val:70},
+      {name:'SQL/DB', val:68},
+      {name:'Python', val:62},
+      {name:'Android', val:58}
+    ];
+    function drawRadar(){
+      const cx=260, cy=170, R=130, n=skills.length;
+      radar.clearRect(0,0,520,360);
+      // rings
+      for(let r=0; r<=5; r++){
+        radar.beginPath();
+        radar.arc(cx,cy,R*r/5,0,Math.PI*2);
+        radar.strokeStyle='rgba(255,255,255,.12)';
+        radar.stroke();
+      }
+      // spokes
+      for(let k=0;k<n;k++){
+        const ang = -Math.PI/2 + k*(2*Math.PI/n);
+        radar.beginPath();
+        radar.moveTo(cx,cy);
+        radar.lineTo(cx+Math.cos(ang)*R, cy+Math.sin(ang)*R);
+        radar.strokeStyle='rgba(255,255,255,.12)';
+        radar.stroke();
+      }
+      // area
+      radar.beginPath();
+      skills.forEach((s,idx)=>{
+        const ang = -Math.PI/2 + idx*(2*Math.PI/n);
+        const r = (s.val/100)*R;
+        const x = cx+Math.cos(ang)*r, y = cy+Math.sin(ang)*r;
+        idx===0 ? radar.moveTo(x,y) : radar.lineTo(x,y);
+      });
+      radar.closePath();
+      radar.fillStyle=getComputedStyle(document.body).getPropertyValue('--accent') || '#40e0d0';
+      radar.globalAlpha=.18; radar.fill(); radar.globalAlpha=1;
+      radar.strokeStyle=getComputedStyle(document.body).getPropertyValue('--accent-2') || '#7c4dff';
+      radar.lineWidth=2; radar.stroke();
+
+      // labels
+      radar.fillStyle=getComputedStyle(document.body).getPropertyValue('--text') || '#e6f1ff';
+      radar.font='12px ui-sans-serif, system-ui';
+      skills.forEach((s,idx)=>{
+        const ang = -Math.PI/2 + idx*(2*Math.PI/n);
+        const x = cx+Math.cos(ang)*(R+16), y=cy+Math.sin(ang)*(R+16);
+        radar.textAlign = Math.cos(ang)>0.15 ? 'left' : (Math.cos(ang)<-0.15 ? 'right' : 'center');
+        radar.fillText(`${s.name} ${s.val}%`, x, y);
+      });
+    }
+    drawRadar();
+
+    /* ========= Projects Filter ========= */
+    const filters = document.querySelectorAll('.filter');
+    const cards = document.querySelectorAll('#projectGrid .project');
+    filters.forEach(f=>f.addEventListener('click', ()=>{
+      filters.forEach(x=>x.classList.remove('active')); f.classList.add('active');
+      const cat = f.dataset.filter;
+      cards.forEach(c=>{
+        if(cat==='all' || c.dataset.cat===cat){ c.classList.remove('hidden'); }
+        else { c.classList.add('hidden'); }
+      });
+    }));
+
+    /* ========= Project Modals ========= */
+    const modal = document.getElementById('modal');
+    const mTitle = document.getElementById('mTitle');
+    const mBody = document.getElementById('mBody');
+    const details = {
+      clothing: {
+        title: 'Online Clothing Store — Details',
+        body: `
+        <p>An Ekart-style e-commerce workflow with product catalog, cart, and payment integration.</p>
+        <ul>
+          <li>Secure cart/session handling, input validation and basic auth.</li>
+          <li>Payment flow mock and order persistence with SQL schema.</li>
+          <li>Stack: Python, Java (interop concepts), MySQL.</li>
+        </ul>`
+      },
+      attendance: {
+        title: 'Online Attendance System — Details',
+        body: `
+        <p>Role-based attendance tracking for students/faculty with audit logs.</p>
+        <ul>
+          <li>Relational schema design, indexes for fast lookups.</li>
+          <li>Admin dashboards; CSV export; summary analytics.</li>
+          <li>Stack: MySQL, Web UI, Auth & RBAC.</li>
+        </ul>`
+      },
+      mockgps: {
+        title: 'Mock Location App — Details',
+        body: `
+        <p>Android utility to simulate GPS coordinates for QA.</p>
+        <ul>
+          <li>Custom route playback; pause/seek; developer options tie-in.</li>
+          <li>Safety prompts and clear test indicators.</li>
+          <li>Stack: Android Studio, Java/Kotlin (conceptually).</li>
+        </ul>`
+      },
+      paper: {
+        title: 'Multi-Cloud Security — Abstract',
+        body: `
+        <p>Survey of shared responsibility, identity & access management, and workload protections across cloud providers with practical mitigations.</p>
+        <ul>
+          <li>Threat landscape: misconfig, IAM sprawl, data exfiltration.</li>
+          <li>Controls: guardrails, CSPM, encryption, logging, zero trust.</li>
+          <li>Outcome: comparative matrix & deployment recommendations.</li>
+        </ul>`
+      }
+    };
+    function openDetails(key){
+      const d = details[key]; if(!d) return;
+      mTitle.textContent = d.title;
+      mBody.innerHTML = d.body;
+      modal.showModal();
+    }
+    function closeModal(){ modal.close(); }
+
+    /* ========= Contact mailto (no backend) ========= */
+    function mailtoSubmit(e){
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const name = encodeURIComponent(f.get('name'));
+      const email = encodeURIComponent(f.get('email'));
+      const msg = encodeURIComponent(f.get('message'));
+      window.location.href = `mailto:darshan46610@gmail.com?subject=Portfolio%20contact%20from%20${name}&body=From:%20${name}%20%3C${email}%3E%0A%0A${msg}`;
+    }
+
+    /* ========= Fun: Packet Visualizer ========= */
+    const pCanvas = document.getElementById('packets');
+    const pCtx = pCanvas.getContext('2d');
+    let running = true;
+    const nodes = [
+      {x:50,y:110,label:'Client'},
+      {x:200,y:60,label:'Switch'},
+      {x:340,y:110,label:'Router'},
+      {x:480,y:60,label:'Server'}
+    ];
+    let packets = [];
+    function addPacket(){
+      const path = Math.random()<.5
+        ? [nodes[0], nodes[1], nodes[2], nodes[3]]
+        : [nodes[3], nodes[2], nodes[1], nodes[0]];
+      packets.push({path, seg:0, t:0});
+    }
+    function drawNodes(){
+      pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+      // links
+      pCtx.strokeStyle='rgba(255,255,255,.22)';
+      pCtx.lineWidth=2;
+      for(let i=0;i<nodes.length-1;i++){
+        pCtx.beginPath();
+        pCtx.moveTo(nodes[i].x, nodes[i].y);
+        pCtx.lineTo(nodes[i+1].x, nodes[i+1].y);
+        pCtx.stroke();
+      }
+      // nodes
+      nodes.forEach(n=>{
+        pCtx.fillStyle=getComputedStyle(document.body).getPropertyValue('--accent-2');
+        pCtx.beginPath(); pCtx.arc(n.x, n.y, 10, 0, Math.PI*2); pCtx.fill();
+        pCtx.fillStyle=getComputedStyle(document.body).getPropertyValue('--text');
+        pCtx.font='12px ui-sans-serif'; pCtx.textAlign='center';
+        pCtx.fillText(n.label, n.x, n.y+24);
+      });
+    }
+    function drawPackets(){
+      packets.forEach(p=>{
+        const a=p.path[p.seg], b=p.path[p.seg+1]; if(!b) return;
+        const x=a.x+(b.x-a.x)*p.t, y=a.y+(b.y-a.y)*p.t;
+        pCtx.fillStyle=getComputedStyle(document.body).getPropertyValue('--accent');
+        pCtx.beginPath(); pCtx.arc(x,y,6,0,Math.PI*2); pCtx.fill();
+        p.t+=0.02+Math.random()*0.01;
+        if(p.t>=1){ p.t=0; p.seg++; if(p.seg>=p.path.length-1){ p.done=true; } }
+      });
+      packets = packets.filter(p=>!p.done);
+    }
+    function loop(){
+      if(running){ drawNodes(); drawPackets(); }
+      requestAnimationFrame(loop);
+    }
+    loop();
+    setInterval(()=>{ if(running) addPacket(); }, 600);
+    function spawnBurst(){ for(let i=0;i<12;i++) setTimeout(addPacket, i*80); }
+    function toggleFlow(){ running=!running; }
+
+    /* ========= Utilities ========= */
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+  </script>
+</body>
+</html>
